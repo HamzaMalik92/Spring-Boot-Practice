@@ -25,34 +25,18 @@ public class CourseController {
     public List getAllCourses() {
         return courses;
     }
-    @RequestMapping("/courses/id/{courseId}")
-    public Course getCourseById(@PathVariable long courseId) {
-        for (Course course : courses) {
-            if (course.getCourseCode() == courseId) {
-                return course;
-            }
-        }
-        // Return null if no course found with the given courseId
-        return null;
+    @RequestMapping("/courses/id/{courseCode}")
+    public Course getCourseById(@PathVariable long courseCode) {
+        return courses.stream().filter(course->course.getCourseCode()==courseCode).findFirst().orElse(null);
     }
 
     @RequestMapping("/courses/name/{courseName}")
     public Course getCourseByName(@PathVariable String courseName) {
-        for (Course course : courses) {
-            if (course.getCourseName().equalsIgnoreCase(courseName)) {
-                return course;
-            }
-        }
-        return null;
+        return courses.stream().filter(course->course.getCourseName().equalsIgnoreCase(courseName)).findAny().orElse(null);
     }
-    @RequestMapping("/courses/{courseName}/{courseId}")
-    public Course getCourseByNameAndId(@PathVariable String courseName, @PathVariable int courseId) {
-        for (Course course : courses) {
-            if (course.getCourseCode() == courseId && course.getCourseName().equalsIgnoreCase(courseName)) {
-                return course;
-            }
-        }
-        return null;
+    @RequestMapping("/courses/{courseName}/{courseCode}")
+    public Course getCourseByNameAndId(@PathVariable String courseName, @PathVariable int courseCode) {
+        return courses.stream().filter(course->course.getCourseName().equalsIgnoreCase(courseName)&&course.getCourseCode()==courseCode).findAny().orElse(null);
     }
 
 }
