@@ -22,7 +22,7 @@ public class CourseController {
     }
 
     @RequestMapping("/courses")
-    public List getAllCourses() {
+    public List<Course> getAllCourses() {
         return courses;
     }
     @RequestMapping("/courses/id/{courseCode}")
